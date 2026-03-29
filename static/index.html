@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Generate high-quality QR codes instantly. Support for URLs, text, email, phone, and WiFi with customizable colors and sizes." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>QR Code Generator — Create Beautiful QR Codes Instantly</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header__logo">
+        <div class="header__icon">⚡</div>
+        <h1 class="header__title">QR Code Generator</h1>
+      </div>
+      <p class="header__subtitle">Create stunning, production-ready QR codes in seconds with full customization.</p>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="main-grid">
+      <!-- Left Panel: Controls -->
+      <section class="card" aria-label="QR Code Configuration">
+        <h2 class="card__title">
+          <span class="card__title-icon">⚙️</span>
+          Configuration
+        </h2>
+
+        <!-- Content Type Tabs -->
+        <div class="tabs" role="tablist" id="content-tabs">
+          <button class="tab tab--active" role="tab" data-tab="text" id="tab-text" aria-selected="true">
+            <span class="tab__icon">📝</span> Text
+          </button>
+          <button class="tab" role="tab" data-tab="url" id="tab-url" aria-selected="false">
+            <span class="tab__icon">🔗</span> URL
+          </button>
+          <button class="tab" role="tab" data-tab="email" id="tab-email" aria-selected="false">
+            <span class="tab__icon">📧</span> Email
+          </button>
+          <button class="tab" role="tab" data-tab="phone" id="tab-phone" aria-selected="false">
+            <span class="tab__icon">📞</span> Phone
+          </button>
+          <button class="tab" role="tab" data-tab="wifi" id="tab-wifi" aria-selected="false">
+            <span class="tab__icon">📶</span> WiFi
+          </button>
+        </div>
+
+        <!-- Tab: Text -->
+        <div class="tab-content tab-content--active" id="content-text" role="tabpanel">
+          <div class="form-group">
+            <label class="form-label" for="input-text">Your Text</label>
+            <textarea class="form-textarea" id="input-text" placeholder="Enter any text to encode..." maxlength="2048" rows="4"></textarea>
+          </div>
+        </div>
+
+        <!-- Tab: URL -->
+        <div class="tab-content" id="content-url" role="tabpanel">
+          <div class="form-group">
+            <label class="form-label" for="input-url">Website URL</label>
+            <input class="form-input" type="url" id="input-url" placeholder="https://example.com" maxlength="2048" />
+          </div>
+        </div>
+
+        <!-- Tab: Email -->
+        <div class="tab-content" id="content-email" role="tabpanel">
+          <div class="form-group">
+            <label class="form-label" for="input-email">Email Address</label>
+            <input class="form-input" type="email" id="input-email" placeholder="hello@example.com" maxlength="320" />
+          </div>
+        </div>
+
+        <!-- Tab: Phone -->
+        <div class="tab-content" id="content-phone" role="tabpanel">
+          <div class="form-group">
+            <label class="form-label" for="input-phone">Phone Number</label>
+            <input class="form-input" type="tel" id="input-phone" placeholder="+1 234 567 8900" maxlength="20" />
+          </div>
+        </div>
+
+        <!-- Tab: WiFi -->
+        <div class="tab-content" id="content-wifi" role="tabpanel">
+          <div class="wifi-grid">
+            <div class="form-group">
+              <label class="form-label" for="wifi-ssid">Network Name (SSID)</label>
+              <input class="form-input" type="text" id="wifi-ssid" placeholder="My WiFi Network" maxlength="128" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="wifi-password">Password</label>
+              <input class="form-input" type="text" id="wifi-password" placeholder="Enter password" maxlength="128" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="wifi-encryption">Encryption</label>
+              <select class="form-select" id="wifi-encryption">
+                <option value="WPA" selected>WPA/WPA2</option>
+                <option value="WEP">WEP</option>
+                <option value="nopass">None (Open)</option>
+              </select>
+            </div>
+          </div>
+          <div class="toggle-group">
+            <input type="checkbox" class="toggle" id="wifi-hidden" />
+            <label class="toggle-label" for="wifi-hidden">Hidden Network</label>
+          </div>
+        </div>
+
+        <!-- Customization Section -->
+        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;" />
+
+        <h3 class="card__title" style="font-size: 1rem;">
+          <span class="card__title-icon">🎨</span>
+          Customization
+        </h3>
+
+        <!-- Colors -->
+        <div class="color-row">
+          <div class="color-picker-group">
+            <label class="form-label">Foreground</label>
+            <div class="color-picker-wrapper">
+              <div class="color-swatch" id="fg-swatch">
+                <input type="color" id="fg-color" value="#ffffff" />
+              </div>
+              <input type="text" class="color-hex-input" id="fg-hex" value="#ffffff" maxlength="7" />
+            </div>
+          </div>
+          <div class="color-picker-group">
+            <label class="form-label">Background</label>
+            <div class="color-picker-wrapper">
+              <div class="color-swatch" id="bg-swatch">
+                <input type="color" id="bg-color" value="#000000" />
+              </div>
+              <input type="text" class="color-hex-input" id="bg-hex" value="#000000" maxlength="7" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Size Slider -->
+        <div class="slider-group" style="margin-top: 1.25rem;">
+          <div class="slider-header">
+            <label class="form-label" for="qr-size" style="margin-bottom: 0;">Size</label>
+            <span class="slider-value" id="size-value">256px</span>
+          </div>
+          <input type="range" class="form-range" id="qr-size" min="128" max="1024" step="64" value="256" />
+        </div>
+
+        <!-- Error Correction -->
+        <div class="form-group">
+          <label class="form-label" for="error-correction">Error Correction Level</label>
+          <select class="form-select" id="error-correction">
+            <option value="L">Low (7%) — Smallest</option>
+            <option value="M" selected>Medium (15%) — Recommended</option>
+            <option value="Q">Quartile (25%) — High</option>
+            <option value="H">High (30%) — Maximum</option>
+          </select>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="btn-generate" id="btn-generate">
+          <span class="btn-generate__spinner"></span>
+          <span class="btn-generate__text">⚡ Generate QR Code</span>
+        </button>
+      </section>
+
+      <!-- Right Panel: Preview -->
+      <section class="card preview-panel" aria-label="QR Code Preview">
+        <h2 class="card__title">
+          <span class="card__title-icon">👁️</span>
+          Preview
+        </h2>
+
+        <div class="preview-area" id="preview-area">
+          <div class="preview-placeholder" id="preview-placeholder">
+            <div class="preview-placeholder__icon">📱</div>
+            <div class="preview-placeholder__text">Your QR code will appear here</div>
+            <div class="preview-placeholder__hint">Configure options and click Generate</div>
+          </div>
+          <img class="preview-image" id="preview-image" alt="Generated QR Code" style="display: none;" />
+        </div>
+
+        <!-- Info Badges -->
+        <div class="info-badges" id="info-badges" style="display: none;">
+          <span class="info-badge" id="badge-type">📝 Text</span>
+          <span class="info-badge" id="badge-size">📐 256px</span>
+          <span class="info-badge" id="badge-ec">🛡️ Medium</span>
+        </div>
+
+        <!-- Download Button -->
+        <button class="btn-download" id="btn-download" disabled>
+          📥 Download PNG
+        </button>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Built with ❤️ using Go &amp; Gin · High-performance QR Code Generator</p>
+    </footer>
+  </div>
+
+  <!-- Toast Container (managed by JS) -->
+  <div id="toast-container"></div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
